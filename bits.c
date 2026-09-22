@@ -147,6 +147,9 @@ unsigned reverse(unsigned v) {
  *   Difficulty: 3
  */
 int logicalShift(int x, int n) {
+    int temp=x>>n;
+    int mask=~(((1<<31)>>n)<<1);
+    return temp&mask;
     return 2;
 }
 
