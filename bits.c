@@ -19,6 +19,7 @@
  * Difficulty: 1
  */
 int bitAnd(int x, int y) {
+    return ~(~x|~y);
     return 2;
 }
 
@@ -30,6 +31,7 @@ int bitAnd(int x, int y) {
  *   Difficulty: 1
  */
 int bitXor(int x, int y) {
+    return ~(~x&~y)&~(x&y);
     return 2;
 }
 
@@ -50,6 +52,16 @@ int bitXor(int x, int y) {
  *   1 if x and y have the same sign , 0 otherwise.
  */
 int samesign(int x, int y) {
+    if(!x){
+        if(!y){
+            return 1;
+        }
+        return 0;
+    }
+    if(!y){
+        return 0;
+    }
+    return !((x>>31)^(y>>31));
     return 2;
 }
 
@@ -63,6 +75,24 @@ int samesign(int x, int y) {
  *   Difficulty: 4
  */
 int logtwo(int v) {
+    int ans=0;
+    int temp;
+    temp=v>0xFFFF;
+    ans=ans|(temp<<4);
+    v=v>>(temp<<4);
+    temp=v>0xFF;
+    ans=ans|(temp<<3);
+    v=v>>(temp<<3);
+    temp=v>0xF;
+    ans=ans|(temp<<2);
+    v=v>>(temp<<2);
+    temp=v>0x3;
+    ans=ans|(temp<<1);
+    v=v>>(temp<<1);
+    temp=v>0x1;
+    ans=ans|temp;
+    return ans;
+
     return 2;
 }
 
@@ -76,6 +106,14 @@ int logtwo(int v) {
  *    Difficulty: 2
  */
 int byteSwap(int x, int n, int m) {
+    int nn=n<<3;       
+    int mm=m<<3;        
+    int nmask=0xFF<<nn;  
+    int mmask=0xFF<<mm;   
+    int nbyte=(x>>nn) & 0xFF; 
+    int mbyte=(x>>mm) & 0xFF;  
+    return (x&~nmask&~mmask)|(nbyte<<mm)|(mbyte<<nn);
+
     return 2;
 }
 
@@ -88,6 +126,15 @@ int byteSwap(int x, int n, int m) {
  *   Difficulty: 3
  */
 unsigned reverse(unsigned v) {
+    unsigned r=0;
+    unsigned i=32;
+    while(i){
+        r=(r<<1)|(v&1);
+        v=v>>1;
+        i=i-1;
+    }
+    return r;
+
     return 2;
 }
 
